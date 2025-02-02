@@ -1,11 +1,16 @@
 {
-  "name": "http-request",
+  "name": "http-request-polyfill",
   "version": "0.1.0",
   "main": "index.js",
   "license": "GPL-3.0-only",
   "repository": "https://github.com/gitlab-az1/http-request.git",
   "author": "gitlab-az1 <gitlab.az1@gmail.com>",
   "dependencies": {
-    "@rapid-d-kit/async": "^0.1.1"
+    "@rapid-d-kit/async": "^0.1.1",
+    "@rapid-d-kit/disposable": "^0.1.1",
+    "@rapid-d-kit/safe": "^0.1.2",
+    "@rapid-d-kit/types": "^0.1.1",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6"
   }
 }
