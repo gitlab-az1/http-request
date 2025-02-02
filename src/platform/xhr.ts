@@ -121,3 +121,19 @@ export function parseHeaders(source: XHR.RequestInit['headers']): Headers {
 
   return result;
 }
+
+export function headersEntries(source: XHR.RequestInit['headers']): readonly [string, string | string[] | undefined][] {
+  const headers = parseHeaders(source);
+  const result: [string, string | string[] | undefined][] = [];
+
+  for(const [key, value] of headers.entries()) {
+    const values = value.split(',').map(item => item.trim());
+
+    result.push([
+      key.toLowerCase().trim(),
+      values.length === 1 ? values[0] : values,
+    ]);
+  }
+
+  return result;
+}

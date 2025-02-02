@@ -1,7 +1,7 @@
 import { assertDefinedString } from '@rapid-d-kit/safe';
 
 import { request } from './polyfill';
-import { parseHeaders, XHR } from './platform/xhr';
+import { headersEntries, parseHeaders, XHR } from './platform/xhr';
 
 
 export type ClientOptions = {
@@ -25,7 +25,10 @@ export class HttpClient {
   public get(url: string | URL, init?: Omit<XHR.RequestInit, 'url' | 'method' | 'payload'>): Promise<XHR.Response> {
     const requestUrl = new URL(url, this.#base);
 
-    const headers = new Headers(Object.fromEntries(this.#defaultHeaders.entries()));
+    const entries = [...headersEntries(this.#defaultHeaders)].filter(([, v]) => typeof v === 'string' || Array.isArray(v)) as [string, string | string[]][];
+    const object = Object.fromEntries(entries) as Record<string, string | readonly string[]>;
+
+    const headers = new Headers( object as unknown as any );
 
     if(init?.headers) {
       for(const [key, value] of parseHeaders(init.headers).entries()) {

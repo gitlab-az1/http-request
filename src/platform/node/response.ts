@@ -1,5 +1,7 @@
 import { Readable } from 'stream';
 import { IncomingMessage } from 'http';
+import { IDisposable } from '@rapid-d-kit/disposable';
+import { LooseAutocomplete } from '@rapid-d-kit/types';
 
 import { XHR } from '../xhr';
 import bitwise from '../../@internals/bitwise';
@@ -203,6 +205,43 @@ export class NodeResponse extends EventEmitter implements XHR.NodeResponse {
     throw new Exception('Unable to clone a node response object', 'ERR_UNSUPPORTED_OPERATION');
   }
 
+  public on<K extends keyof XHR.DefaultEventsMap>(
+    event: LooseAutocomplete<K>,
+    listener: (...args: EnsureArray<XHR.DefaultEventsMap[K]>) => unknown,
+    thisArgs?: any,
+    disposables?: IDisposable[] // eslint-disable-line comma-dangle
+  ): IDisposable {
+    return super.addListener(
+      event,
+        listener as () => void,
+        thisArgs,
+        disposables,
+        { once: false } // eslint-disable-line comma-dangle
+    );
+  }
+  
+  public once<K extends keyof XHR.DefaultEventsMap>(
+    event: LooseAutocomplete<K>,
+    listener: (...args: EnsureArray<XHR.DefaultEventsMap[K]>) => unknown,
+    thisArgs?: any,
+    disposables?: IDisposable[] // eslint-disable-line comma-dangle
+  ): IDisposable {
+    return super.addListener(
+      event,
+        listener as () => void,
+        thisArgs,
+        disposables,
+        { once: true } // eslint-disable-line comma-dangle
+    );
+  }
+  
+  public off<K extends keyof XHR.DefaultEventsMap>(
+    event: LooseAutocomplete<K>,
+    listener: (...args: EnsureArray<XHR.DefaultEventsMap[K]>) => unknown // eslint-disable-line comma-dangle
+  ): boolean {
+    return super.removeListener(event, listener as () => void);
+  }
+
   public override dispose(): void {
     super.dispose();
     this.#raw.destroy();
@@ -275,6 +314,11 @@ export class NodeResponse extends EventEmitter implements XHR.NodeResponse {
 
       this.#headers.set(k, [existent, ...( Array.isArray(values) ? values.map(String) : [String(values)] )]);
     }
+
+    super.emit('headers-received', {
+      statusCode: this.#raw.statusCode!,
+      headers: Array.from(this.#headers.entries()),
+    } satisfies XHR.InitialHeaders);
   }
 
   async #consumeStream(): Promise<Buffer> {

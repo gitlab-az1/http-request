@@ -105,20 +105,22 @@ export function request(
 
     const normalizedHeaders: Record<string, string | string[] | undefined> = {};
 
-    for(const [key, value] of headers.entries()) {
+    for(const [key, v] of headers.entries()) {
+      const values = v.split(',').map(item => item.trim());
+
       if(!(key in normalizedHeaders)) {
-        normalizedHeaders[key] = value;
+        normalizedHeaders[key] = values.length === 1 ? values[0] : values;
         continue;
       }
 
       const existent = normalizedHeaders[key];
 
       if(Array.isArray(existent)) {
-        existent.push(value);
+        existent.push(...values);
         continue;
       }
 
-      normalizedHeaders[key] = [existent, value].filter(Boolean) as string[];
+      normalizedHeaders[key] = [existent, ...values].filter(Boolean) as string[];
     }
 
     const opts: https.RequestOptions = {
