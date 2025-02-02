@@ -1,0 +1,11 @@
+{
+  "name": "http-request",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "GPL-3.0-only",
+  "repository": "https://github.com/gitlab-az1/http-request.git",
+  "author": "gitlab-az1 <gitlab.az1@gmail.com>",
+  "dependencies": {
+    "@rapid-d-kit/async": "^0.1.1"
+  }
+}
