@@ -50,6 +50,7 @@ export function request(
       redirect: options.followRedirects ? 'follow' : 'manual',
       signal: ac.signal,
       headers: new Headers(),
+      credentials: options.credentials,
     };
 
     if(Array.isArray(options.headers)) {

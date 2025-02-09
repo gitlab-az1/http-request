@@ -32,6 +32,7 @@ export namespace XHR {
     token?: ICancellationToken;
     user?: string;
     password?: string;
+    credentials?: 'include' | 'omit' | 'same-origin';
     headers?: Headers | [string, string | string[] | undefined][] | (CommonHttpHeaders & {
       [key: Exclude<string, keyof CommonHttpHeaders>]: string | string[] | undefined;
     });

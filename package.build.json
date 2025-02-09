@@ -1,6 +1,6 @@
 {
   "name": "http-request-polyfill",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "index.js",
   "license": "GPL-3.0-only",
   "repository": "https://github.com/gitlab-az1/http-request.git",
