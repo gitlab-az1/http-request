@@ -5,6 +5,7 @@ import { headersEntries, parseHeaders, XHR } from './platform/xhr';
 
 
 export type ClientOptions = {
+  credentials?: XHR.RequestInit['credentials'];
   defaultHeaders?: XHR.RequestInit['headers'];
   defaultTimeout?: number;
 };
@@ -41,6 +42,7 @@ export class HttpClient {
       headers,
       method: 'GET',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -60,6 +62,7 @@ export class HttpClient {
       headers,
       method: 'POST',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -79,6 +82,7 @@ export class HttpClient {
       headers,
       method: 'PUT',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -98,6 +102,7 @@ export class HttpClient {
       headers,
       method: 'PATCH',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -117,6 +122,7 @@ export class HttpClient {
       headers,
       method: 'DELETE',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -136,6 +142,7 @@ export class HttpClient {
       headers,
       method: 'OPTIONS',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -155,6 +162,7 @@ export class HttpClient {
       headers,
       method: 'HEAD',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -174,6 +182,7 @@ export class HttpClient {
       headers,
       method: 'CONNECT',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 
@@ -193,6 +202,7 @@ export class HttpClient {
       headers,
       method: init?.method || 'GET',
       timeout: init?.timeout || this.#options.defaultTimeout,
+      credentials: init?.credentials || this.#options.credentials
     });
   }
 }
